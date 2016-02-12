@@ -97,6 +97,7 @@ end
 ; --- Setup ticks ---
 to setup-ticks
   ; In this method you may start the tick counter.
+  reset-ticks
 end
 
 
@@ -116,8 +117,11 @@ to update-beliefs
  ; At the beginning your agent will receive global information about where all the dirty locations are.
  ; This belief set needs to be updated frequently according to the cleaning actions: if you clean dirt, you do not believe anymore there is a dirt at that location.
  ; In Assignment 3.3, your agent also needs to know where is the garbage can.
- set beliefs (patches with [ pcolor = grey ])
-
+ ; set beliefs (patches with [ pcolor = grey ])
+  ask vacuums [
+    set beliefs (patches with [ pcolor = grey ])
+    show beliefs
+    ]
 
 
 end
