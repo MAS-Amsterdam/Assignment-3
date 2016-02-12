@@ -77,6 +77,9 @@ end
 to setup-vacuums
   ; In this method you may create the vacuum cleaner agents (in this case, there is only 1 vacuum cleaner agent).
    create-vacuums 1 [set color red ]
+   ask vacuums [
+     set desire (count patches with [ pcolor = grey ]) ; initialised desire to reduce the totoal amount of dirty cells
+     ]
 end
 
 
@@ -92,6 +95,8 @@ to update-desires
   ; You should update your agent's desires here.
   ; At the beginning your agent should have the desire to clean all the dirt.
   ; If it realises that there is no more dirt, its desire should change to something like 'stop and turn off'.
+  ask vacuums [ set desire (count patches with [ pcolor = grey ]) ]
+
 end
 
 
@@ -112,12 +117,26 @@ end
 to update-intentions
   ; You should update your agent's intentions here.
   ; The agent's intentions should be dependent on its beliefs and desires.
+  ask vacuums [
+    face (min-one-of beliefs [distance myself])
+  ]
 end
 
 
 ; --- Execute actions ---
 to execute-actions
   ; Here you should put the code related to the actions performed by your agent: moving and cleaning (and in Assignment 3.3, throwing away dirt).
+  ask vacuums [
+    ifelse pcolor = grey
+    [set pcolor green]
+    [
+      ifelse can-move? 1 [;if ahead is not an obstacle
+      forward 1
+      ]
+      [ right random 360
+        ]
+    ]
+    ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
