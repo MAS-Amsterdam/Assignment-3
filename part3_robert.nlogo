@@ -53,7 +53,8 @@ to setup-garbage
   create-garbage 1 [set color black
     setxy random-xcor random-ycor
     set shape "box"
-    set amount 0]
+    set amount 0
+    set pcolor black]
 
 end
 
@@ -96,8 +97,11 @@ end
 ; --- Setup vacuums ---
 to setup-vacuums
   ; In this method you may create the vacuum cleaner agents (in this case, there is only 1 vacuum cleaner agent).
+
    create-vacuums 1 [set color red ]
    ask vacuums [
+     set amount 0
+     set release false
      set desire (count patches with [ pcolor = grey ]) ; initialised desire to reduce the totoal amount of dirty cells
      ]
 end
@@ -128,7 +132,8 @@ to update-beliefs
  ; In Assignment 3.3, your agent also needs to know where is the garbage can.
   ask vacuums [
     set beliefs (patches with [ pcolor = grey ])
-    show beliefs
+    show "still have patches: "
+    show (count beliefs)
     ]
 end
 
@@ -139,15 +144,26 @@ to update-intentions
   ; The agent's intentions should be dependent on its beliefs and desires.
 
   ask vacuums [
-    ; set intention (one-of beliefs) ; part 1
-    if ((release = true) and (pcolor = black))
-    [set release false]
+    show "before change"
+    show intention
 
-    ifelse (amount = capacity)
-    [set release true
-      set intention (one-of patches with [pcolor = black] ) ]
+    ; set intention (one-of beliefs) ; part 1
+    if ((release = true) and ([distance one-of garbage with [color = black]] of (patch xcor ycor)) = 0)
+    [set release false
+      set intention (one-of beliefs)
+      ]
+    show "agent amount"
+    show amount
+
+    ifelse (release = true)
+    [ ; set release true
+      ; if ((count (patches with [pcolor = black])) = 0) [show "error"]
+      set intention (one-of garbage with [color = black] ) ]
     [set intention (min-one-of beliefs [distance myself] ) ] ; part 2
     ; face intention
+
+    show "after change"
+    show intention
   ]
 end
 
@@ -157,12 +173,18 @@ to execute-actions
   ; Here you should put the code related to the actions performed by your agent: moving and cleaning (and in Assignment 3.3, throwing away dirt).
   ask vacuums [
     face intention
-    ifelse pcolor = grey
-    [set pcolor green]
-    [ifelse(pcolor = black)
+
+    ifelse (pcolor = grey and release = false)
+    [set pcolor green
+      set amount (amount + 1)
+      if amount = capacity [set release true]]
+    [
+      ifelse(([distance one-of garbage with [color = black]] of (patch xcor ycor)) = 0)
       [set trans amount
        set amount 0
-       ask garbage [set amount (amount + trans)]]
+       show amount
+       ask garbage [set amount (amount + trans)]
+       set release false]
       [forward 1]]
     ]
 end
@@ -203,7 +225,7 @@ dirt_pct
 dirt_pct
 0
 100
-4
+7
 1
 1
 NIL
@@ -359,6 +381,17 @@ capacity
 1
 NIL
 HORIZONTAL
+
+MONITOR
+450
+372
+513
+417
+release
+release
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
