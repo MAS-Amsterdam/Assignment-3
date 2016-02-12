@@ -143,20 +143,20 @@ to update-intentions
 
   ask vacuums [
 
-    if ((release = true) and ( amount = 0) )
-    [set release false
-      set trans 0]
+    ;if ((release = true) and ( amount = 0) )
+    ;[set release false
+    ;set trans 0
+    ;]
     ; set intention (one-of beliefs) ; part 1
-    show amount
-    ifelse (amount = 5)
+    ;show amount
+    ifelse (amount = capacity)
     [set release true
      ;set intention (turpatches with [pcolor = black] )
      set intention  (one-of garbage with [color = black] )
-
       ]
 
     [set intention (min-one-of beliefs [distance myself] )
-     show intention
+     ;show intention
       ] ; part 2
     ; face intention
   ]
@@ -169,25 +169,29 @@ to execute-actions
   ask vacuums [
 
     face intention
-    ifelse pcolor = grey and (amount < 5)
+    ifelse pcolor = grey and (amount < capacity)
     [set pcolor green
       set amount ( amount + 1 )  ]
     [
-     ifelse( round (distance one-of garbage ) = 0 )
+     ifelse( round (distance one-of garbage ) = 0 );
      ;ifelse( round xcor = roundx and round ycor = roundy )
-    [
+     [;if the turtle is in the garbage, either release or leave the garbage.
+
       ifelse (amount = 0)
-      [forward 1
-        show amount]
-      [set amount  0]
+      [; if the vacuum has released the dirts, forward with intention set
+        forward 1]
+       ;show amount]
+      [; if not, release the dirts.
+        set amount  0
+        set release false]
       ;set amount  0
          ]
       ;show amount
-     ; show roundx
+      ; show roundx
 
        ;ask garbage [set amount (amount + trans)]]
-    [forward 1
-     ]
+      [;if the vacuum is not in the gaebage, forward with intention.
+        forward 1]
     ]
 
     ]
@@ -394,6 +398,17 @@ MONITOR
 431
 Amount of dirty it carries
 [ amount ] of vacuum 0
+17
+1
+15
+
+MONITOR
+237
+424
+315
+485
+NIL
+release
 17
 1
 15
