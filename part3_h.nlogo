@@ -36,8 +36,8 @@ breed [garbage]
 ; 1) beliefs: the agent's belief base about locations that contain dirt
 ; 2) desire: the agent's current desire
 ; 3) intention: the agent's current intention
-vacuums-own [beliefs desire intention amount roundx roundy]
-garbage-own [amount roundx roundy ]
+vacuums-own [beliefs desire intention amount ]
+garbage-own [amount ]
 
 ; --- Setup ---
 to setup
@@ -53,9 +53,7 @@ end
 to setup-garbage
   create-garbage 1 [set color black
     setxy random-xcor random-ycor
-    set roundx  ( round xcor  )
-    show roundx
-    set roundy (round ycor )
+
     set shape "box"
     set amount 0]
 
@@ -388,6 +386,17 @@ capacity
 1
 NIL
 HORIZONTAL
+
+MONITOR
+521
+370
+773
+431
+Amount of dirty it carries
+[ amount ] of vacuum 0
+17
+1
+15
 
 @#$#@#$#@
 ## WHAT IS IT?
