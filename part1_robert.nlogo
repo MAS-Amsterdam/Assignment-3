@@ -127,7 +127,8 @@ to update-intentions
   ; You should update your agent's intentions here.
   ; The agent's intentions should be dependent on its beliefs and desires.
   ask vacuums [
-    set intention (min-one-of beliefs [distance myself])
+    ; set intention (one-of beliefs) ; part 1
+    set intention (min-one-of beliefs [distance myself]) ; part 2
     ; face intention
   ]
 end
@@ -141,11 +142,9 @@ to execute-actions
     ifelse pcolor = grey
     [set pcolor green]
     [
-      ifelse can-move? 1 [;if ahead is not an obstacle
+      ;ifelse can-move? 1 [;if ahead is not an obstacle
       forward 1
-      ]
-      [ right random 360
-        ]
+
     ]
     ]
 end
