@@ -171,7 +171,7 @@ to execute-actions
   ask vacuums [
 
     face intention
-    ifelse pcolor = grey
+    ifelse pcolor = grey and (amount < 5)
     [set pcolor green
       set amount ( amount + 1 )  ]
     [
@@ -232,7 +232,7 @@ dirt_pct
 dirt_pct
 0
 100
-4
+31
 1
 1
 NIL
