@@ -127,7 +127,8 @@ to update-intentions
   ; You should update your agent's intentions here.
   ; The agent's intentions should be dependent on its beliefs and desires.
   ask vacuums [
-    face (min-one-of beliefs [distance myself])
+    set intention (min-one-of beliefs [distance myself])
+    ; face intention
   ]
 end
 
@@ -136,6 +137,7 @@ end
 to execute-actions
   ; Here you should put the code related to the actions performed by your agent: moving and cleaning (and in Assignment 3.3, throwing away dirt).
   ask vacuums [
+    face intention
     ifelse pcolor = grey
     [set pcolor green]
     [
