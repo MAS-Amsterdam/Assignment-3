@@ -53,11 +53,20 @@ end
 to go
   ; This method executes the main processing cycle of an agent.
   ; For Assignment 3, this involves updating desires, beliefs and intentions, and executing actions (and advancing the tick counter).
-  update-desires
-  update-beliefs
-  update-intentions
-  execute-actions
-  tick
+
+  ask vacuums [update-desires
+    if (desire = 0) [
+      die
+      show "the agent died"]]
+  ifelse ((count vacuums) = 0)
+  [stop]
+  [
+    update-desires
+    update-beliefs
+    update-intentions
+    execute-actions
+    tick
+  ]
 end
 
 
@@ -175,7 +184,7 @@ dirt_pct
 dirt_pct
 0
 100
-11
+4
 1
 1
 NIL
