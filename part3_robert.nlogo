@@ -62,10 +62,13 @@ to go
   ; This method executes the main processing cycle of an agent.
   ; For Assignment 3, this involves updating desires, beliefs and intentions, and executing actions (and advancing the tick counter).
 
-  ask vacuums [update-desires
+  ask vacuums [
+    update-desires
     if (desire = 0) [
       die
-      show "the agent died"]]
+      show "the agent died"]
+    ]
+
   ifelse ((count vacuums) = 0)
   [stop]
   [
@@ -134,9 +137,11 @@ end
 to update-intentions
   ; You should update your agent's intentions here.
   ; The agent's intentions should be dependent on its beliefs and desires.
-  if ((release = true) and (pcolor = black)) [set release false]
+
   ask vacuums [
     ; set intention (one-of beliefs) ; part 1
+    if ((release = true) and (pcolor = black))
+    [set release false]
 
     ifelse (amount = capacity)
     [set release true
