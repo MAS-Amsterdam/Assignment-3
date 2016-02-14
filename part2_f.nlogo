@@ -358,7 +358,7 @@ The total time it used to clean the environment is tracked on the monitor labell
 The dirt percentage can be modified by using the slider labelled dirt_pct.
 The grid height and the width can be modified by using the slider labelled heigth and width, respectively.
 How is the variance of the time it used to clean all the environment varies as the percentage of dirts changes.
-Compare the time it takes to clean all the dirts with that in the part 1 model, when set the number of dirty cells and the world size equal.
+Compare the time it takes to clean all the dirts with that in the part 1 model, when setting the number of dirty cells and the world size equal.
 
 
 
