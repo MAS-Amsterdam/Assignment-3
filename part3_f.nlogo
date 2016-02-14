@@ -127,7 +127,6 @@ to update-beliefs
  ; In Assignment 3.3, your agent also needs to know where is the garbage can.
   ask vacuums [
     set beliefs (patches with [ pcolor = grey ])
-
      ]
 end
 
