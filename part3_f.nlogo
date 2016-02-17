@@ -65,15 +65,14 @@ to go
   set time timer
   ask vacuum 0 [
   update-beliefs
-  ;if beliefs = [];the code for methoed 2
-  ;[stop]  ;the code for methoed 2
   update-desires
+  if desire = 0
+  [stop]
   update-intentions
-  if intention = NOBODY;the code for methoed 1
-  [stop];the code for methoed 1
   execute-actions
   ]
   tick
+
 end
 
 
@@ -147,12 +146,12 @@ to execute-actions
   ; Here you should put the code related to the actions performed by your agent: moving and cleaning (and in Assignment 3.3, throwing away dirt).
   ask vacuums [
 
-    face intention
 
     ifelse( round (distance intention ) = 0 )
     [;if the vacuum has arrived at its intention
 
-      ifelse( round (distance one-of garbage ) = 0 )
+
+      ifelse( round (distance one-of garbage ) = 0 and (intention = turtle 1) )
       [;if the vacuum is in the garbage, either release or leave the garbage.
       execute-actions-in-garbage  ]
       [; if the vacuum is in one of the dirty patches, clean the dirt and add one dirt to its amount.
@@ -162,6 +161,7 @@ to execute-actions
 
 
       [;if the vacuum hasn't reached the intention, forward with intention.
+        face intention
         forward 1]
     ]
 end
@@ -169,6 +169,7 @@ end
 to execute-actions-in-garbage
       ifelse (amount = 0)
       [; if the vacuum has released the dirts, forward with intention set
+        face intention
         forward 1]
       [; if not, release the dirts.
         set amount  0 ]
@@ -178,11 +179,11 @@ end
 GRAPHICS-WINDOW
 782
 17
-1192
-403
+1191
+400
 -1
 -1
-14.814814814814815
+23.529411764705884
 1
 10
 1
@@ -193,9 +194,9 @@ GRAPHICS-WINDOW
 0
 1
 0
-26
+16
 0
-23
+14
 1
 1
 1
@@ -211,7 +212,7 @@ dirt_pct
 dirt_pct
 0
 100
-26
+47
 1
 1
 NIL
@@ -332,7 +333,7 @@ width
 width
 0
 100
-27
+17
 1
 1
 NIL
@@ -347,7 +348,7 @@ height
 height
 0
 100
-24
+15
 1
 1
 NIL
