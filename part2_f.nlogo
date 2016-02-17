@@ -55,19 +55,17 @@ to go
   ; This method executes the main processing cycle of an agent.
   ; For Assignment 3, this involves updating desires, beliefs and intentions, and executing actions (and advancing the tick counter).
   set time timer
-  ask vacuums [update-desires
-    if (desire = 0) [
-      die
-      show "the agent died"]]
-  ifelse ((count vacuums) = 0)
-  [stop]
-  [
-    update-desires
-    update-beliefs
-    update-intentions
-    execute-actions
-    ]
-    tick
+  ask vacuum 0 [
+  update-beliefs
+  ;if beliefs = [];the code for methoed 2
+  ;[stop]  ;the code for methoed 2
+  update-desires
+  update-intentions
+  if intention = NOBODY;the code for methoed 1
+  [stop];the code for methoed 1
+  execute-actions
+  ]
+  tick
 end
 
 
@@ -118,6 +116,7 @@ to update-beliefs
  ; In Assignment 3.3, your agent also needs to know where is the garbage can.
   ask vacuums [
     set beliefs (patches with [ pcolor = grey ])
+    show beliefs
     ;set beliefs sort-on [ distance myself ] beliefs; second method to simulate this model.Patches are ranked according to the distance from the vacuum's current position.
     ]
 end
@@ -148,11 +147,11 @@ end
 GRAPHICS-WINDOW
 782
 17
-1192
-448
+1191
+497
 -1
 -1
-8.0
+50.0
 1
 10
 1
@@ -163,9 +162,9 @@ GRAPHICS-WINDOW
 0
 1
 0
-49
+7
 0
-49
+8
 1
 1
 1
@@ -302,7 +301,7 @@ width
 width
 0
 100
-50
+8
 1
 1
 NIL
@@ -317,7 +316,7 @@ height
 height
 0
 100
-50
+9
 1
 1
 NIL
@@ -327,13 +326,13 @@ HORIZONTAL
 ## WHAT IS IT?
 
 This model explores the behavior of a smart vacuum cleaner with beliefs, desires and intentions. It has desires to clean all the dirts in the environment, beliefs about the location of the dirts, and intentions to clean the nearest piece of dirt in its beliefs. It will clean all the dirts in the environment, and then stop.
-This model differs from the part 1 model in that it sets its intention as the currently nearest piece of dirt in its beliefs.
+This model differs from the part 1 model in that it sets its intention as the nearest piece of dirt from the vacuum in its beliefs.
 
 ## HOW IT WORKS
 There are two methods to get this model work:
 The vacuum sets up its beliefs about the location of the dirts in the environment. The vacuum updates its beliefs every step to check and remove the dirts' location that has been cleaned, and accordingly updates its desire and intentions. It has desires to clean all the dirts in the environment, when there is no dirt, the vacuum dies (disappear). It has the intention to clean the patch nearest to itself in the current beliefs base.
 
-The vacuum sets up its beliefs about the location of the dirts in the environment, and the location is ranked in the nearest to the vacuum order. The vacuum updates its beliefs every step to check and remove the dirts location that has been cleaned, and update the oder of the beliefs according to the vacuum's current position. Then it accordingly updates its desire and intentions. It has desires to clean all the dirts in the environment, when there is no dirt, the vacuum dies (disappear). It has the intention to clean the patch ranking first in the current beliefs base.
+The vacuum sets up its beliefs about the location of the dirts in the environment, and the location is ranked in the nearest to the vacuum order. The vacuum updates its beliefs every step to check and remove the dirts location that has been cleaned, and update the order of the beliefs according to the vacuum's current position. Then it accordingly updates its desire and intentions. It has desires to clean all the dirts in the environment, when there is no dirt, the vacuum dies (disappear). It has the intention to clean the patch ranking first in the current beliefs base.
 
 
 ## HOW TO USE IT
@@ -348,16 +347,16 @@ Slider dirt_pct: Sets the dirt percent for the world Button setup: Sets up the w
 ## THINGS TO NOTICE
 
 The number of dirty cells left is tracked on the monitor labelled "dirt".
-The vacuums current desire is tracked on the monitor labelled "The agent's current desire" . Note it will decrease as the cacuum cleans dirt. When it is 0, the vacuum has no desires, and dies.
+The vacuums current desire is tracked on the monitor labelled "The agent's current desire" . Note it will decrease as the vacuum cleans dirt. When it is 0, the vacuum has no desires, and dies.
 The vacuum's beliefs about the dirts' location is tracked on the monitor labelled "The agent's current belief base".
 The vacuum's intention is tracked on the monitor labelled"The agent's current intention". Note that the vacuums intention will alwyas be the first belief on the beliefs base for the second method. But not for our first method.
-The total time it used to clean the environment is tracked on the monitor labelled"Total simulation time".
+The total time it took to clean the environment is tracked on the monitor labelled"Total simulation time".
 
 ## THINGS TO TRY
 
 The dirt percentage can be modified by using the slider labelled dirt_pct.
 The grid height and the width can be modified by using the slider labelled heigth and width, respectively.
-How is the variance of the time it used to clean all the environment varies as the percentage of dirts changes.
+How is the variance of the time it took to clean the environment varies as the percentage of dirts changes.
 Compare the time it takes to clean all the dirts with that in the part 1 model, when setting the number of dirty cells and the world size equal.
 
 
