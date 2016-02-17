@@ -20,7 +20,7 @@
 ;
 ; 1) total_dirty: this variable represents the amount of dirty cells in the environment.
 ; 2) time: the total simulation time.
-globals [total_dirty time ]
+globals [total_dirty time]
 
 
 ; --- Agents ---
@@ -55,19 +55,16 @@ to go
   ; This method executes the main processing cycle of an agent.
   ; For Assignment 3, this involves updating desires, beliefs and intentions, and executing actions (and advancing the tick counter).
   set time timer
-  ask vacuums [update-desires
-    if (desire = 0) [
-      die
-      show "the agent died"]]
-  ifelse ((count vacuums) = 0)
+  ask vacuum 0 [
+  update-beliefs
+  if beliefs = []
   [stop]
-  [
-    update-desires
-    update-beliefs
-    update-intentions
-    execute-actions
-    tick
+  update-desires
+  update-intentions
+  execute-actions
   ]
+  tick
+
 end
 
 
@@ -119,16 +116,6 @@ to update-beliefs
   ask vacuums [
     set beliefs (patches with [ pcolor = grey ])
     set beliefs sort beliefs; patches are ranked in the beliefs in left-to-right,top-to-bottom order
-    ;let n 0
-   ; foreach sort beliefs [
-    ;ask ? [
-   ; set plabel n
-   ; set n n + 1
- ; ]]
-
-    show beliefs
-
-
     ]
 end
 
@@ -158,11 +145,11 @@ end
 GRAPHICS-WINDOW
 782
 17
-1192
-464
+1191
+447
 -1
 -1
-16.666666666666668
+66.66666666666667
 1
 10
 1
@@ -173,9 +160,9 @@ GRAPHICS-WINDOW
 0
 1
 0
-23
+5
 0
-24
+5
 1
 1
 1
@@ -191,7 +178,7 @@ dirt_pct
 dirt_pct
 0
 100
-71
+17
 1
 1
 NIL
@@ -312,7 +299,7 @@ width
 width
 0
 100
-24
+6
 1
 1
 NIL
@@ -327,7 +314,7 @@ height
 height
 0
 100
-25
+6
 1
 1
 NIL
@@ -363,14 +350,14 @@ The number of dirty cells left is tracked on the monitor labelled "dirt".
 The vacuums current desire is tracked on the monitor labelled "The agent's current desire" . Note it will decrease as the cacuum cleans dirt. When it is 0, the vacuum has no desires, and dies.
 The vacuum's beliefs about the dirts' location is tracked on the monitor labelled "The agent's current belief base".
 The vacuum's intention is tracked on the monitor labelled"The agent's current intention". Note that the vacuums intention will alwyas be the first belief on the beliefs base.
-The total time it used to clean the environment is tracked on the monitor labelled"Total simulation time".
+The total time it took to clean the environment is tracked on the monitor labelled"Total simulation time".
 
 
 ## THINGS TO TRY
 
 The dirt percentage can be modified by using the slider labelled dirt_pct.
 The grid height and the width can be modified by using the slider labelled heigth and width, respectively.
-How is the variance of the time it used to clean all the environment varies as the percentage of dirts changes.
+How is the variance of the time it took to clean the environment varies as the percentage of dirts changes.
 
 
 
