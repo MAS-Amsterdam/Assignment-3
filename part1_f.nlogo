@@ -57,9 +57,9 @@ to go
   set time timer
   ask vacuum 0 [
   update-beliefs
-  if beliefs = []
-  [stop]
   update-desires
+  if desire = 0
+  [stop ]
   update-intentions
   execute-actions
   ]
@@ -145,8 +145,8 @@ end
 GRAPHICS-WINDOW
 782
 17
-1191
-447
+1192
+448
 -1
 -1
 66.66666666666667
