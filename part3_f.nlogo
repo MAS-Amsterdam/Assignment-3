@@ -63,19 +63,16 @@ to go
   ; This method executes the main processing cycle of an agent.
   ; For Assignment 3, this involves updating desires, beliefs and intentions, and executing actions (and advancing the tick counter).
   set time timer
-  ask vacuums [update-desires
-    if (desire = 0) [
-      die
-      show "the agent died"]]
-  ifelse ((count vacuums) = 0)
-  [stop]
-  [
-    update-desires
-    update-beliefs
-    update-intentions
-    execute-actions
+  ask vacuum 0 [
+  update-beliefs
+  ;if beliefs = [];the code for methoed 2
+  ;[stop]  ;the code for methoed 2
+  update-desires
+  update-intentions
+  if intention = NOBODY;the code for methoed 1
+  [stop];the code for methoed 1
+  execute-actions
   ]
-
   tick
 end
 
@@ -127,6 +124,7 @@ to update-beliefs
  ; In Assignment 3.3, your agent also needs to know where is the garbage can.
   ask vacuums [
     set beliefs (patches with [ pcolor = grey ])
+
      ]
 end
 
@@ -407,10 +405,10 @@ Slider dirt_pct: Sets the dirt percent for the world Button setup: Sets up the w
 ## THINGS TO NOTICE
 
 The number of dirty cells left is tracked on the monitor labelled "dirt".
-The vacuums current desire is tracked on the monitor labelled "The agent's current desire" . Note it will decrease as the cacuum cleans dirt. When it is 0, the vacuum has no desires, and dies.
+The vacuums current desire is tracked on the monitor labelled "The agent's current desire" . Note it will decrease as the vacuum cleans dirt. When it is 0, the vacuum has no desires, and dies.
 The vacuum's beliefs about the dirts' location is tracked on the monitor labelled "The agent's current belief base".
 The vacuum's intention is tracked on the monitor labelled"The agent's current intention". Note that the vacuums intention will alwyas be the first belief on the beliefs base for the second method. But not for our first method.
-The total time it used to clean the environment is tracked on the monitor labelled"Total simulation time".
+The total time it took to clean the environment is tracked on the monitor labelled"Total simulation time".
 The amount of dirts the vacuums is carrying is is tracked on the monitor labelled "Amount of dirty the vacuums is carrying".
 
 ## THINGS TO TRY
@@ -418,7 +416,7 @@ The amount of dirts the vacuums is carrying is is tracked on the monitor labelle
 The dirt percentage can be modified by using the slider labelled dirt_pct.
 The grid height and the width can be modified by using the slider labelled heigth and width, respectively.
 Change the capacity of the bag, compare how the time changes.
-How is the variance of the time it used to clean all the environment varies as the percentage of dirts changes and the capacity of the bag changes.
+How is the variance of the time it took to clean all the environment varies as the percentage of dirts changes and the capacity of the bag changes.
 Compare the time it takes to clean all the dirts with that in the part 1 & 2 model, when setting the number of dirty cells and the world size equal.
 
 
