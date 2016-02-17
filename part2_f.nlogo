@@ -57,12 +57,10 @@ to go
   set time timer
   ask vacuum 0 [
   update-beliefs
-  ;if beliefs = [];the code for methoed 2
-  ;[stop]  ;the code for methoed 2
   update-desires
+  if desire = 0
+  [stop]
   update-intentions
-  if intention = NOBODY;the code for methoed 1
-  [stop];the code for methoed 1
   execute-actions
   ]
   tick
@@ -116,7 +114,6 @@ to update-beliefs
  ; In Assignment 3.3, your agent also needs to know where is the garbage can.
   ask vacuums [
     set beliefs (patches with [ pcolor = grey ])
-    show beliefs
     ;set beliefs sort-on [ distance myself ] beliefs; second method to simulate this model.Patches are ranked according to the distance from the vacuum's current position.
     ]
 end
@@ -147,8 +144,8 @@ end
 GRAPHICS-WINDOW
 782
 17
-1191
-497
+1192
+498
 -1
 -1
 50.0
@@ -180,7 +177,7 @@ dirt_pct
 dirt_pct
 0
 100
-4
+13
 1
 1
 NIL
